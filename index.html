@@ -483,23 +483,27 @@
 
 <script>
 const MEAL_PRESETS = {
-  breakfast_standard: { label: 'Standard', cal: 360, p: 32, c: 38, f: 8, note: 'Protein shake + banana + long mac w/ oat milk' },
-  lunch_chicken: { label: 'Chicken + rice', cal: 560, p: 58, c: 55, f: 10, note: '200g grilled chicken breast + 1 cup cooked rice' },
-  lunch_tuna: { label: 'Tuna + rice', cal: 480, p: 52, c: 55, f: 6, note: '200g tuna + 1 cup cooked rice' },
-  dinner_caesar: { label: 'Caesar + steak + wagyu', cal: 958, p: 84, c: 9, f: 66, note: 'Eye fillet + 2 wagyu sausages + 1/2 packet Caesar salad' },
+  lunch_chicken: { label: 'Chicken + rice', cal: 764, p: 58, c: 60, f: 29, note: '2 marinated chicken thighs + rice/quinoa cup + sweet corn + cucumber' },
+  lunch_tuna: { label: 'Tuna + rice', cal: 524, p: 49, c: 52, f: 13, note: '2 cans springwater tuna + rice/quinoa cup + sweet corn + cucumber' },
+  dinner_caesar: { label: 'Caesar + steak + wagyu', cal: 934, p: 74, c: 22, f: 61, note: 'Eye fillet + 2 wagyu sausages + 1/2 packet Caesar salad' },
   dinner_asian: { label: 'Chilli Crunch + chicken', cal: 465, p: 35, c: 34, f: 22, note: '1/2 packet Aldi Chilli Crunch + chicken' },
-  dinner_green: { label: 'Green salad + salmon', cal: 650, p: 50, c: 18, f: 43, note: '180g salmon + spinach, tomato, cucumber, 1/2 avo, cheese, red onion (S&P only)' },
+  dinner_green: { label: 'Green salad + salmon', cal: 725, p: 48, c: 18, f: 53, note: '180g Tasmanian salmon + spinach, tomato, cucumber, 1/2 avo, cheese, red onion (S&P only)' },
   dinner_green_snapper: { label: 'Green salad + snapper', cal: 685, p: 53, c: 36, f: 38, note: '180g crumbed snapper + green salad (S&P only)' },
+  dinner_skewers: { label: 'Chicken skewers + salad', cal: 690, p: 54, c: 27, f: 42, note: '3 Aldi honey soy skewers + green salad' },
   dinner_dads: { label: "Dad's curry", cal: 545, p: 32, c: 39, f: 28, note: 'Mixed curry + 1/3 cup rice + veggies (avg)' },
-  dinner_lamb: { label: 'Lamb + chips + broc', cal: 650, p: 60, c: 42, f: 26, note: '200g lamb shoulder + air fryer sweet potato chips + broccoli' },
+  dinner_lamb: { label: 'Lamb + chips + broc', cal: 610, p: 60, c: 50, f: 24, note: '200g lamb shank + 150g air fryer sweet potato chips + broccoli' },
   snack_chobani: { label: 'Chobani 15g', cal: 115, p: 15, c: 8, f: 2, note: 'Chobani 15g Protein pouch' },
   snack_yopro: { label: 'YoPro pouch', cal: 110, p: 15, c: 9, f: 0.5, note: 'YoPro Protein pouch (Aldi)' },
 };
 
 const MEAL_SLOTS = [
-  { id: 'breakfast', title: 'Breakfast', presets: ['breakfast_standard'] },
   { id: 'lunch', title: 'Lunch', presets: ['lunch_chicken', 'lunch_tuna'] },
   { id: 'dinner', title: 'Dinner', presets: null },
+];
+
+const BREAKFAST_PRESETS = [
+  { id: 'shake', label: 'Protein shake', short: 'Shake', cal: 122, p: 24, c: 3, f: 1.5 },
+  { id: 'banana', label: 'Banana', short: 'Banana', cal: 105, p: 1, c: 27, f: 0 },
 ];
 
 const DRINK_PRESETS = [
@@ -515,15 +519,15 @@ const DRINK_PRESETS = [
 
 const SNACK_PRESETS = [
   { id: 'chobani', label: 'Chobani 15g', short: 'Chobani', cal: 115, p: 15, c: 8, f: 2 },
-  { id: 'yopro', label: 'YoPro pouch', short: 'YoPro', cal: 110, p: 15, c: 9, f: 0.5 },
-  { id: 'yopro_frozen', label: 'YoPro froz. dessert', short: 'Froz YoPro', cal: 110, p: 15, c: 9, f: 0.5 },
+  { id: 'yopro', label: 'YoPro pouch', short: 'YoPro', cal: 94, p: 15, c: 7, f: 0.5 },
+  { id: 'yopro_frozen', label: 'YoPro froz. dessert', short: 'Froz YoPro', cal: 94, p: 15, c: 7, f: 0.5 },
   { id: 'boiled_egg', label: 'Boiled egg', short: 'Egg', cal: 78, p: 6, c: 0.5, f: 5 },
   { id: 'cottage_cheese', label: 'Cottage cheese 100g', short: 'Cottage', cal: 95, p: 12, c: 3, f: 4 },
   { id: 'beef_jerky', label: 'Beef jerky 25g', short: 'Jerky', cal: 75, p: 13, c: 2, f: 2 },
-  { id: 'tuna_can', label: 'Tuna can 95g', short: 'Tuna', cal: 110, p: 22, c: 0, f: 2 },
+  { id: 'tuna_can', label: 'Tuna can 95g', short: 'Tuna', cal: 114, p: 16, c: 1, f: 5 },
   { id: 'protein_shake', label: 'Protein shake (water)', short: 'Shake', cal: 130, p: 28, c: 3, f: 1.5 },
   { id: 'string_cheese', label: 'String cheese stick', short: 'Cheese', cal: 70, p: 7, c: 1, f: 4.5 },
-  { id: 'musashi_bar', label: 'Musashi Double Choc bar', short: 'Musashi', cal: 230, p: 20, c: 18, f: 8 },
+  { id: 'musashi_bar', label: 'Musashi Double Choc bar', short: 'Musashi', cal: 221, p: 20, c: 10, f: 8 },
 ];
 
 const EATING_OUT_PRESETS = [
@@ -531,19 +535,19 @@ const EATING_OUT_PRESETS = [
   { id: 'kfc_tenders', label: 'KFC 5 tenders', short: 'KFC 5', cal: 550, p: 42, c: 25, f: 30 },
   { id: 'maccas_muffin', label: 'Sausage Bacon Egg McMuffin', short: 'McMuffin', cal: 480, p: 22, c: 30, f: 28 },
   { id: 'pub_steak', label: 'Pub steak sandwich (no chips)', short: 'Steak sando', cal: 750, p: 50, c: 55, f: 35 },
-  { id: 'pizza_half', label: 'Aldi meatlovers (1/2)', short: '½ Pizza', cal: 625, p: 33, c: 65, f: 25 },
-  { id: 'pizza_whole', label: 'Aldi meatlovers (whole)', short: 'Whole Pizza', cal: 1250, p: 65, c: 130, f: 50 },
+  { id: 'pizza_half', label: 'Pizza (2 slices)', short: '½ Pizza', cal: 346, p: 14, c: 42, f: 12 },
+  { id: 'pizza_whole', label: 'Pizza (whole, 4 slices)', short: 'Whole Pizza', cal: 692, p: 29, c: 85, f: 24 },
 ];
 
 function getDinnerPresets(dow) {
   if (dow === 2) return ['dinner_dads'];
-  return ['dinner_caesar', 'dinner_asian', 'dinner_green', 'dinner_green_snapper', 'dinner_lamb'];
+  return ['dinner_caesar', 'dinner_asian', 'dinner_green', 'dinner_green_snapper', 'dinner_skewers', 'dinner_lamb'];
 }
 
 const TRAINING_SCHEDULE = {
   1: { type: 'TRAIN', detail: '1 HOUR' },
   3: { type: 'RUN', detail: '5K · 6-7M/KM' },
-  5: { type: 'RUN', detail: '5K · 6-7M/KM' },
+  0: { type: 'RUN', detail: '5K · 6-7M/KM' },
 };
 
 const DAYS_SHORT = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
@@ -578,6 +582,22 @@ async function saveWeight(w) { try { await storage.set('weight:current', String(
 function dateKey(d) { return d.toISOString().slice(0, 10); }
 function formatDate(d) { return d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short' }).toUpperCase(); }
 
+// Build Mon-Sun week array starting from current week's Monday
+function getCurrentWeek() {
+  const today = new Date();
+  const dow = today.getDay();
+  const daysFromMonday = dow === 0 ? 6 : dow - 1;
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - daysFromMonday);
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    days.push(d);
+  }
+  return days;
+}
+
 let currentDate = new Date();
 let dayData = {};
 let currentWeight = null;
@@ -602,7 +622,14 @@ function computeTotals() {
       f += Number(e.f) || 0;
     }
   }
-  // Drinks
+  const breakfast = dayData.breakfast_items || {};
+  for (const item of BREAKFAST_PRESETS) {
+    const count = breakfast[item.id] || 0;
+    cal += count * item.cal;
+    p += count * item.p;
+    c += count * item.c;
+    f += count * item.f;
+  }
   const drinks = dayData.drinks || {};
   for (const drink of DRINK_PRESETS) {
     const count = drinks[drink.id] || 0;
@@ -611,7 +638,6 @@ function computeTotals() {
     c += count * drink.c;
     f += count * drink.f;
   }
-  // Snacks
   const snacks = dayData.snacks || {};
   for (const snack of SNACK_PRESETS) {
     const count = snacks[snack.id] || 0;
@@ -620,7 +646,6 @@ function computeTotals() {
     c += count * snack.c;
     f += count * snack.f;
   }
-  // Eating out
   const eatingOut = dayData.eating_out || {};
   for (const item of EATING_OUT_PRESETS) {
     const count = eatingOut[item.id] || 0;
@@ -634,14 +659,12 @@ function computeTotals() {
 
 function render() {
   const app = document.getElementById('app');
-  const today = new Date();
   const dow = currentDate.getDay();
   const training = TRAINING_SCHEDULE[dow];
   const meals = getMealsForDay(currentDate);
   const totals = computeTotals();
 
-  const days = [];
-  for (let i = 6; i >= 0; i--) { const d = new Date(today); d.setDate(today.getDate() - i); days.push(d); }
+  const days = getCurrentWeek();
 
   const lost = currentWeight ? (STARTING_WEIGHT - currentWeight).toFixed(1) : '—';
   const togo = currentWeight ? (currentWeight - GOAL_WEIGHT).toFixed(1) : '—';
@@ -699,7 +722,7 @@ function render() {
             </div>
             <div class="schedule-row" data-dow="2">
               <span class="schedule-day">Tue</span>
-              <span class="schedule-meal"><span class="label">Lunch · TRAIN PM</span>Chicken + rice</span>
+              <span class="schedule-meal"><span class="label">Lunch · TRAIN 1HR</span>Chicken + rice</span>
               <span class="schedule-meal"><span class="label">Dinner</span>Dad's curry</span>
             </div>
             <div class="schedule-row" data-dow="3">
@@ -715,16 +738,16 @@ function render() {
             <div class="schedule-row" data-dow="5">
               <span class="schedule-day">Fri</span>
               <span class="schedule-meal"><span class="label">Lunch</span>Tuna + rice</span>
-              <span class="schedule-meal"><span class="label">Dinner · CARB LOAD</span>Chilli Crunch + chicken</span>
+              <span class="schedule-meal"><span class="label">Dinner</span>Chicken skewers + salad</span>
             </div>
             <div class="schedule-row free" data-dow="6">
               <span class="schedule-day">Sat</span>
-              <span class="schedule-meal"><span class="label">Lunch · 5K AM</span>Free (eating out)</span>
-              <span class="schedule-meal"><span class="label">Dinner</span>Free (½ pizza max)</span>
+              <span class="schedule-meal"><span class="label">Lunch</span>Free (eating out)</span>
+              <span class="schedule-meal"><span class="label">Dinner · CARB LOAD</span>Pasta/pizza ½ or lamb</span>
             </div>
             <div class="schedule-row" data-dow="0">
               <span class="schedule-day">Sun</span>
-              <span class="schedule-meal"><span class="label">Lunch</span>Leftover or salad</span>
+              <span class="schedule-meal"><span class="label">Lunch · 5K AM</span>Leftover or salad</span>
               <span class="schedule-meal"><span class="label">Dinner · RESET</span>Green salad + salmon</span>
             </div>
           </div>
@@ -799,6 +822,24 @@ function render() {
         </div>
       </div>
     </div>` : ''}
+
+    <div class="section">
+      <div class="section-label"><span>Breakfast</span><span class="weight-label">tap to add · ✕ to remove</span></div>
+      <div class="drinks">
+        ${BREAKFAST_PRESETS.map(b => {
+          const count = (dayData.breakfast_items || {})[b.id] || 0;
+          const hasCount = count > 0;
+          return `
+            <div class="drink-card ${hasCount ? 'has-count' : ''}" data-breakfast="${b.id}">
+              <button class="drink-minus" data-breakfast-minus="${b.id}">−</button>
+              <div class="drink-short">${b.short}</div>
+              <div class="drink-info">${b.cal}c · ${b.p}P</div>
+              <div class="drink-count ${hasCount ? '' : 'zero'}">${count > 0 ? '×' + count : '—'}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
 
     <div class="section">
       <div class="section-label"><span>Meals</span></div>
@@ -902,7 +943,7 @@ function render() {
 
     ${history.length > 0 ? `
     <div class="section">
-      <div class="section-label"><span>Last 7 Days · Calories</span></div>
+      <div class="section-label"><span>This Week · Calories</span></div>
       ${history.map(h => {
         const pct = Math.min(100, (h.cal / targets.cal) * 100);
         const isOver = h.cal > targets.cal * 1.05;
@@ -962,7 +1003,6 @@ function render() {
     });
   });
 
-  // Drinks handlers
   app.querySelectorAll('[data-drink]').forEach(card => {
     const drinkId = card.dataset.drink;
     card.addEventListener('click', async (e) => {
@@ -985,7 +1025,28 @@ function render() {
     });
   });
 
-  // Snacks handlers
+  app.querySelectorAll('[data-breakfast]').forEach(card => {
+    const itemId = card.dataset.breakfast;
+    card.addEventListener('click', async (e) => {
+      if (e.target.dataset.breakfastMinus) return;
+      dayData.breakfast_items = dayData.breakfast_items || {};
+      dayData.breakfast_items[itemId] = (dayData.breakfast_items[itemId] || 0) + 1;
+      await persistDay();
+      render();
+    });
+  });
+  app.querySelectorAll('[data-breakfast-minus]').forEach(btn => {
+    const itemId = btn.dataset.breakfastMinus;
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      if (!dayData.breakfast_items || !dayData.breakfast_items[itemId]) return;
+      dayData.breakfast_items[itemId] -= 1;
+      if (dayData.breakfast_items[itemId] <= 0) delete dayData.breakfast_items[itemId];
+      await persistDay();
+      render();
+    });
+  });
+
   app.querySelectorAll('[data-snack]').forEach(card => {
     const snackId = card.dataset.snack;
     card.addEventListener('click', async (e) => {
@@ -1008,7 +1069,6 @@ function render() {
     });
   });
 
-  // Eating out handlers
   app.querySelectorAll('[data-eatingout]').forEach(card => {
     const itemId = card.dataset.eatingout;
     card.addEventListener('click', async (e) => {
@@ -1075,7 +1135,6 @@ function render() {
     document.getElementById('targets-modal').classList.add('show');
   });
 
-  // Rules card toggle + today highlight
   const rulesCard = document.getElementById('rules-card');
   const rulesToggle = document.getElementById('rules-toggle');
   if (rulesOpen) rulesCard.classList.add('open');
@@ -1084,8 +1143,8 @@ function render() {
     rulesCard.classList.toggle('open');
     try { await storage.set('ui:rules_open', String(rulesOpen)); } catch {}
   });
-  const todayDow = String(currentDate.getDay());
-  const todayRow = rulesCard.querySelector(`[data-dow="${todayDow}"]`);
+  const todayDowStr = String(currentDate.getDay());
+  const todayRow = rulesCard.querySelector(`[data-dow="${todayDowStr}"]`);
   if (todayRow) todayRow.classList.add('today');
 }
 
@@ -1116,16 +1175,20 @@ async function refreshDay() {
 }
 
 async function loadHistory() {
-  const today = new Date();
+  const week = getCurrentWeek();
   const days = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
+  for (const d of week) {
     const data = await loadDay(dateKey(d));
     let cal = 0;
     if (data) {
       for (const slot of MEAL_SLOTS) {
         if (data[slot.id]?.logged) cal += Number(data[slot.id].cal) || 0;
+      }
+      if (data.breakfast_items) {
+        for (const item of BREAKFAST_PRESETS) {
+          const count = data.breakfast_items[item.id] || 0;
+          cal += count * item.cal;
+        }
       }
       if (data.drinks) {
         for (const drink of DRINK_PRESETS) {
